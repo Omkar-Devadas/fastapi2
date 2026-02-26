@@ -1,9 +1,18 @@
 # app/db/database.py
 
+import os
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-DATABASE_URL = "postgresql://postgres:12345678@localhost:5432/omi"
+DATABASE_URL = os.getenv(
+    "DATABASE_URL",
+    "postgresql+asyncpg://calcnexa_user:calcnexa123@127.0.0.1:5432/calcnexa_db",
+)
+
+# This project uses sync SQLAlchemy sessions; convert asyncpg URL to psycopg2.
+if DATABASE_URL.startswith("postgresql+asyncpg://"):
+    DATABASE_URL = DATABASE_URL.replace("postgresql+asyncpg://", "postgresql+psycopg2://", 1)
 
 engine = create_engine(
     DATABASE_URL,
