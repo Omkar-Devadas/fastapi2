@@ -6,9 +6,11 @@ class StartSignup(BaseModel):
     email: EmailStr
     phone: str
 
+
 class VerifyOTP1(BaseModel):
     signup_id: int
     otp: str
+
 
 class CompleteProfile(BaseModel):
     signup_id: int
@@ -19,4 +21,3 @@ class CompleteProfile(BaseModel):
 class VerifyOTP2(BaseModel):
     signup_id: int
     otp: str
-#hello
